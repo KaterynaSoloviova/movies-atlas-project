@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies Atlas</title>
+</head>
+<body>
+<h2>Movie list:</h2>
+{% for movie in movies %}
+    <div  style="height: 200px;">
+        {% if movie.photo %}
+            <div><img src="{{ movie.photo.url }}" alt="{{ movie.title }} poster" style="width: 100px; float: left; margin-right: 10px;"></div>
+        {% endif %}
+        <div> {{movie.title}} </div>
+        <div> {{movie.year}} </div>
+        <div>
+            {% for country in movie.country.all %}
+            {{country.name}}
+            {% endfor %}
+        </div>
+
+        <div>
+            {% for genre in movie.genre.all %}
+            {{ genre.name }}
+            {% endfor %}
+        </div>
+        <p></p>
+        <div>
+            {{ movie.description }}
+        </div>
+        <p></p>
+    </div>
+{% endfor %}
+</body>
+</html>
