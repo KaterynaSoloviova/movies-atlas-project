@@ -3,32 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Movies Atlas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    Movies Atlas
+  </a>
+</nav>
 <h2>Movie list:</h2>
 {% for movie in movies %}
-    <div  style="height: 200px;">
-        {% if movie.photo %}
-            <div><img src="{{ movie.photo.url }}" alt="{{ movie.title }} poster" style="width: 100px; float: left; margin-right: 10px;"></div>
-        {% endif %}
-        <div> {{movie.title}} </div>
-        <div> {{movie.year}} </div>
-        <div>
-            {% for country in movie.country.all %}
-            {{country.name}}
-            {% endfor %}
-        </div>
 
-        <div>
-            {% for genre in movie.genre.all %}
-            {{ genre.name }}
-            {% endfor %}
+    <div class="card mb-3" style="max-width: 700px; min-width: 500px;">
+      <div class="row g-0">
+        <div class="col-md-3">
+            {% if movie.photo %}
+            <div><img src="{{ movie.photo.url }}" class="img-fluid rounded-start" alt="{{ movie.title }} poster"></div>
+            {% endif %}
         </div>
-        <p></p>
-        <div>
-            {{ movie.description }}
+        <div class="col-md-9">
+          <div class="card-body">
+            <h5 class="card-title">{{movie.title}} <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">{{movie.imdb_rating}}</span></h5>
+            <p class="card-text">
+                <div>Year: {{movie.year}} </div>
+                <div>Country:
+                    {% for country in movie.country.all %}
+                    {{country.name}}
+                    {% endfor %}
+                </div>
+
+                <div>Genre:
+                    {% for genre in movie.genre.all %}
+                    {{ genre.name }}
+                    {% endfor %}
+                </div>
+                <p></p>
+                <div>
+                    {{ movie.description }}
+                </div>
+            </p>
+            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+          </div>
         </div>
-        <p></p>
+      </div>
     </div>
 {% endfor %}
 </body>
