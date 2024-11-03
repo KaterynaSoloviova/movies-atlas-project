@@ -1,0 +1,93 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}
+<title>{{ actor.first_name }} {{ actor.last_name }}</title>
+{% endblock %}
+
+{% block content %}
+<div class="block">
+    <div class="container">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{% url 'movies:movie_list' %}">MoviesAtlas</a></li>
+                <li><a href="{% url 'movies:get_movie' movie.pk %}">{{ movie.title }}</a></li>
+                <li class="is-active"><a href="#" aria-current="page">{{ actor.first_name }} {{ actor.last_name }}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="fixed-grid has-3-cols">
+        <div class="grid">
+            <div class="cell">
+                {% if actor.photo %}
+                <figure class="image"><img src="{{ actor.photo.url }}" class="img-fluid rounded-start"
+                                           alt="{{ actor.first_name }} {{ actor.last_name }} poster"></figure>
+                {% endif %}
+            </div>
+            <div class="cell is-col-span-2">
+                <div class="block">
+                    <p class="title is-4">{{ actor.first_name }} {{ actor.last_name }} </p>
+                    <p class="card-text">
+                    <div>
+                        Birthday: {{actor.birthday}}
+                    </div>
+                    <div class="block">
+                        Country: {{ actor.country }}
+                    </div>
+
+                    <p></p>
+                    <div>
+                        {{ actor.biography }}
+                    </div>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="block">
+        <div class="block">
+            <p class="title is-4">Known for:</p>
+        </div>
+        <div class="fixed-grid has-5-cols">
+            <div class="grid">
+                {% for movie in actor.movies.all %}
+                <div class="cell">
+                    <a href="{% url 'movies:get_movie' movie.pk %}">
+                        <div class="card">
+                            <div class="card-image">
+                                <figure class="image is-3by4">
+                                    <img
+                                            src="{{ movie.photo.url }}" class="img-fluid rounded-start"
+                                            alt="{{ movie.title }} poster"
+                                    />
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="media">
+                                    <div class="media-left">
+                                    </div>
+                                    <div class="media-content">
+                                        <p class="title is-5">{{ movie.title }}</p>
+                                        <p class="subtitle is-6">IMDb rating: {{movie.imdb_rating}}</p>
+                                        <p class="subtitle is-6">Year: {{movie.year}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

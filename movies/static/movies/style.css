@@ -1,0 +1,11 @@
+.card {
+    &.is-horizontal {
+        display: flex;
+
+        .card-image {
+            max-width: 180px;
+
+        }
+    }
+
+}
