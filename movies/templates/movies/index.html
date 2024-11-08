@@ -10,122 +10,131 @@
         <div class="grid">
             <div class="cell">
                 <div class="box">
-                    <p class="title is-4">
+                    <form id="movie-filter" action="{% url 'movies:movie_list' %}">
+                        <p class="title is-4">
                         <span class="icon is-small is-left has-text-warning">
                           <i class="fa-solid fa-filter"></i>
                         </span> &nbsp; Filter
-                    </p>
+                        </p>
 
-                    <div class="block">
-                        <div class="checkboxes">
-                            <label class="checkbox">
-                                <input type="checkbox"/>
-                                Movies
-                            </label>
-
-                            <label class="checkbox">
-                                <input type="checkbox"/>
-                                TV Series
-                            </label>
-
-                            <label class="checkbox">
-                                <input type="checkbox"/>
-                                Cartoons
-                            </label>
-
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label class="label">Countries</label>
-                        <div class="control has-icons-left">
-                            <div class="select is-info is-rounded is-fullwidth">
-                                <select>
-                                    <option value=""></option>
-                                    <option value="UK">UK</option>
-                                    <option value="USA">USA</option>
-                                    <option value="Ukraine">Ukraine</option>
-                                    <option value="Germany">Germany</option>
-                                    <option value="France">France</option>
-                                    <option value="South Korea">South Korea</option>
-                                    <option value="Japan">Japan</option>
-                                </select>
-                            </div>
-                            <div class="icon is-small is-left">
-                                <i class="fas fa-globe"></i>
+                        <div class="block">
+                            <div class="checkboxes">
+                                {% for category in category_list %}
+                                <label class="checkbox">
+                                    <input type="checkbox" name="{{category.name}}" value="{{category.id}}"
+                                           {% if category.id in category_ids %}
+                                           checked
+                                           {% endif %}
+                                    />
+                                    {{category.name}}
+                                </label>
+                                {% endfor %}
                             </div>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label class="label">Genre</label>
-                        <div class="control has-icons-left">
-                            <div class="select is-info is-rounded is-fullwidth">
-                                <select>
-                                    <option value=""></option>
-                                    <option value="Thriller">Thriller</option>
-                                    <option value="Drama">Drama</option>
-                                </select>
-                            </div>
-                            <div class="icon is-small is-left">
-                                <i class="fa-solid fa-masks-theater"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label for="sliderYearFrom" class="label">From Year:</label>
-                        <input id="sliderYearFrom"
-                               class="slider is-fullwidth is-success has-output-tooltip"
-                               type="range"
-                               min="1930"
-                               max="2025"
-                               value="1930"
-                               step="1"
-                               oninput="document.getElementById('sliderOutputYearFrom').value = this.value">
-
-                        <output id="sliderOutputYearFrom" class="ml-2">1930</output>
-                    </div>
-
-                    <div class="field">
-                        <label for="sliderYearTo" class="label">To Year:</label>
-                        <input id="sliderYearTo"
-                               class="slider is-fullwidth is-success has-output-tooltip"
-                               type="range"
-                               min="1930"
-                               max="2025"
-                               value="2025"
-                               step="1"
-                               oninput="document.getElementById('sliderOutputYearTo').value = this.value">
-                        <output id="sliderOutputYearTo" class="ml-2">2025</output>
-                    </div>
-
-                    <div class="block">
                         <div class="field">
-                            <label for="sliderIMDbMin" class="label">Lowest IMDb Rating:</label>
-                            <input id="sliderIMDbMin"
+                            <label class="label">Countries</label>
+                            <div class="control has-icons-left">
+                                <div class="select is-info is-rounded is-fullwidth">
+                                    <select name="country">
+                                        <option value="-1"></option>
+                                        {% for country in country_list %}
+                                        <option value="{{country.id}}"
+                                                {% if selected_country_id == country.id %}
+                                                selected
+                                                {% endif %}
+                                        >{{country.name}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="icon is-small is-left">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Genre</label>
+                            <div class="control has-icons-left">
+                                <div class="select is-info is-rounded is-fullwidth">
+                                    <select name="genre">
+                                        <option value="-1"></option>
+                                        {% for genre in genre_list %}
+                                        <option value="{{genre.id}}"
+                                                {% if selected_genre_id == genre.id %}
+                                                selected
+                                                {% endif %}
+                                        >{{genre.name}}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="icon is-small is-left">
+                                    <i class="fa-solid fa-masks-theater"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="sliderYearFrom" class="label">From Year:</label>
+                            <input id="sliderYearFrom"
                                    class="slider is-fullwidth is-success has-output-tooltip"
                                    type="range"
-                                   min="1"
-                                   max="10"
-                                   value="5"
-                                   step="0.1"
-                                   oninput="document.getElementById('sliderOutputIMDbMin').value = this.value">
-                            <output id="sliderOutputIMDbMin" class="ml-2">5</output>
-                        </div>
-                    </div>
+                                   min="1930"
+                                   max="2025"
+                                   value="{{selected_year_from}}"
+                                   name="year_from"
+                                   step="1"
+                                   oninput="document.getElementById('sliderOutputYearFrom').value = this.value">
 
-                    <div class="block">
+                            <output id="sliderOutputYearFrom" class="ml-2">{{selected_year_from}}</output>
+                        </div>
 
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button class="button is-link">Search</button>
-                            </div>
-                            <div class="control">
-                                <button class="button is-link is-light">Clear</button>
+                        <div class="field">
+                            <label for="sliderYearTo" class="label">To Year:</label>
+                            <input id="sliderYearTo"
+                                   class="slider is-fullwidth is-success has-output-tooltip"
+                                   type="range"
+                                   min="1930"
+                                   max="2025"
+                                   value="{{selected_year_to}}"
+                                   name="year_to"
+                                   step="1"
+                                   oninput="document.getElementById('sliderOutputYearTo').value = this.value">
+
+                            <output id="sliderOutputYearTo" class="ml-2">{{selected_year_to}}</output>
+                        </div>
+
+                        <div class="block">
+                            <div class="field">
+                                <label for="sliderIMDbMin" class="label">Lowest IMDb Rating:</label>
+                                <input id="sliderIMDbMin"
+                                       class="slider is-fullwidth is-success has-output-tooltip"
+                                       type="range"
+                                       min="1"
+                                       max="10"
+                                       value="{{selected_rating_imdb}}"
+                                       name="rating"
+                                       step="0.1"
+                                       oninput="document.getElementById('sliderOutputIMDbMin').value = this.value">
+
+                                <output id="sliderOutputIMDbMin" class="ml-2">{{selected_rating_imdb}}</output>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="block">
+
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <button class="button is-link">Search</button>
+                                </div>
+                                <div class="control">
+                                    <a type="button" class="button is-link is-light" href="{% url 'movies:movie_list' %}">Clear</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 

@@ -9,7 +9,7 @@
     <div class="container">
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-                <li><a href="#">MoviesAtlas</a></li>
+                <li><a href="{% url 'movies:movie_list' %}">MoviesAtlas</a></li>
                 <li class="is-active"><a href="#" aria-current="page">{{movie.title}}</a></li>
             </ul>
         </nav>
