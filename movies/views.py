@@ -9,6 +9,11 @@ def movie_list(request: HttpRequest) -> HttpResponse:
     category_list = Category.objects.all()
 
     movies_list = Movie.objects.all()
+    search = request.GET.get('q')
+    selected_search = ""
+    if search is not None:
+        movies_list = movies_list.filter(title__icontains=search)
+        selected_search = search
 
     country_id = request.GET.get("country")
     selected_country_id = -1
@@ -52,7 +57,7 @@ def movie_list(request: HttpRequest) -> HttpResponse:
                    "category_list": category_list, "category_ids": category_ids,
                    "selected_country_id": selected_country_id, "selected_genre_id": selected_genre_id,
                    "selected_year_from": selected_year_from, "selected_year_to": selected_year_to,
-                   "selected_rating_imdb": selected_rating_imdb})
+                   "selected_rating_imdb": selected_rating_imdb, "search": selected_search})
 
 
 def get_movie(request: HttpRequest, pk: int) -> HttpResponse:

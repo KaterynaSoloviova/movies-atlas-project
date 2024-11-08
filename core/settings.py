@@ -41,7 +41,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bulma',
     'movies.apps.MoviesConfig',
+    'accounts.apps.AccountsConfig',
 ]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
