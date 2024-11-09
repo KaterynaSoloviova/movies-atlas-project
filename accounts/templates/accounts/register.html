@@ -3,20 +3,32 @@
 
 {% block title %}
 <title>Sign Up</title>
+<link rel="stylesheet" href="{% static 'accounts/login.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Create an Account</h2>
+<section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-5-tablet is-4-desktop is-8-widescreen">
+                    <div class="box signup-box">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="submit-btn">Sign Up</button>
-    </form>
+                        <p class="title is-4 custom-title">Create an Account</p>
 
-    <div class="login-link">
-        Already have an account? <a href="{% url 'accounts:login' %}">Log in</a>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="button is-info is-dark">Sign Up</button>
+                        </form>
+
+                        <div class="login-link">
+                            Already have an account? <a href="{% url 'accounts:login' %}">Log in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}

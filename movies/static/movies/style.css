@@ -9,3 +9,109 @@
     }
 
 }
+
+.cat-img{
+
+}
+
+.top-header {
+    background-color: #2D2E37 !important;
+}
+
+
+.site-logo {
+    margin-left: 20px;
+}
+
+html {
+    background-color: #1c1c1c;
+}
+
+.box {
+    background-color: #2D2E37 !important;
+}
+
+.checkbox {
+    color: lightslategray;
+}
+
+.label {
+    color: lightslategray;
+}
+
+output {
+    color: lightslategray;
+}
+
+.filter-header {
+    color: #3584bd;
+}
+
+.card-image {
+    padding: 10px;
+}
+
+.card {
+    background-color: #2D2E37 !important;
+}
+
+.card-content {
+    color: lightslategray;
+}
+
+.custom-title {
+    color: #b5cfe8;
+}
+
+.imdb-rating{
+    background-color: #ffea88;
+}
+
+.card-info-text{
+    color: #a4bbd2;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.card-content a:link{
+    color: #3584bd;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.custom-link{
+    color: #3584bd;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+ a:hover.custom-link{
+    color: darkred;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+ .notification{
+     background-color: #838388;
+     padding: 5px;
+     margin-bottom: 5px;
+ }
+
+ .notification .title {
+     margin-bottom: 5px;
+ }
+
+ .small-film-card{
+     border-color: #838388 !important;
+     border-width: medium;
+     border-style: solid;
+ }
+
+ .small-film-card-title{
+     color: lightslategray;
+     padding: 10px 15px;
+ }
+
+ .signup-box{
+     color: lightslategray;
+ }

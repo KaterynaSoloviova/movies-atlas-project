@@ -5,14 +5,16 @@
 {% endblock %}
 
 {% block content %}
+<div class="block"></div>
+
 <div class="container">
     <div class="fixed-grid has-3-cols">
         <div class="grid">
             <div class="cell">
                 <div class="box">
                     <form id="movie-filter" action="{% url 'movies:movie_list' %}">
-                        <p class="title is-4">
-                        <span class="icon is-small is-left has-text-warning">
+                        <p class="title is-4 filter-header">
+                        <span class="icon is-small is-left">
                           <i class="fa-solid fa-filter"></i>
                         </span> &nbsp; Filter
                         </p>
@@ -43,7 +45,8 @@
                                                 {% if selected_country_id == country.id %}
                                                 selected
                                                 {% endif %}
-                                        >{{country.name}}
+                                        >
+                                            {{country.name}}
                                         </option>
                                         {% endfor %}
                                     </select>
@@ -127,10 +130,11 @@
 
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <button class="button is-link">Search</button>
+                                    <button class="button is-info is-dark">Search</button>
                                 </div>
                                 <div class="control">
-                                    <a type="button" class="button is-link is-light" href="{% url 'movies:movie_list' %}">Clear</a>
+                                    <a type="button" class="button is-info is-dark"
+                                       href="{% url 'movies:movie_list' %}">Clear</a>
                                 </div>
                             </div>
                         </div>
@@ -139,6 +143,7 @@
             </div>
 
             <div class="cell is-col-span-2">
+                {% if movies_list %}
                 {% for movie in movies_list %}
 
                 <a href="{% url 'movies:get_movie' movie.pk %}" class="list-group-item">
@@ -153,22 +158,26 @@
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                    <p class="title is-4">{{movie.title}}</p>
+                                    <p class="title is-4 custom-title">{{movie.title}}</p>
                                 </div>
                                 <div class="media-right">
-                                    <span class="tag is-warning is-large">{{movie.imdb_rating}}</span>
+                                    <span class="tag is-medium imdb-rating">IMDB: {{movie.imdb_rating}}</span>
                                 </div>
                             </div>
 
                             <div class="content">
-                                <div>Year: {{movie.year}}</div>
-                                <div>Country:
+                                <div>
+                                    <span class="card-info-text">Year:</span> {{movie.year}}
+                                </div>
+                                <div>
+                                    <span class="card-info-text">Country:</span>
                                     {% for country in movie.country.all %}
                                     {{ country.name }}
                                     {% endfor %}
                                 </div>
 
-                                <div>Genre:
+                                <div>
+                                    <span class="card-info-text">Genre:</span>
                                     {% for genre in movie.genre.all %}
                                     {{ genre.name }}
                                     {% endfor %}
@@ -185,8 +194,23 @@
                 </a>
                 <br/>
                 {% endfor %}
+                {% else %}
+                <div class="grid">
+                     <div class="cell">
+                     </div>
+                     <div class="cell">
+                        <figure class="image cat-img">
+                            <img src="/media/images/cat2.png" alt="{{ movie.title }} poster">
+                        </figure>
+                        <p class="title custom-title is-4">Opps no results....</p>
+                    </div>
+                    <div class="cell">
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

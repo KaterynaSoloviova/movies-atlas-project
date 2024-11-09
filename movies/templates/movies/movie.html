@@ -5,105 +5,160 @@
 {% endblock %}
 
 {% block content %}
+<div class="block"></div>
+
 <div class="block">
     <div class="container">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-                <li><a href="{% url 'movies:movie_list' %}">MoviesAtlas</a></li>
-                <li class="is-active"><a href="#" aria-current="page">{{movie.title}}</a></li>
-            </ul>
-        </nav>
+        <div class="box">
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><a class="custom-link" href="{% url 'movies:movie_list' %}">MoviesAtlas</a></li>
+                    <li><p class="custom-link">&nbsp;{{movie.title}}</p></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 
 <div class="container">
-    <div class="fixed-grid has-4-cols">
-        <div class="grid">
-            <div class="cell">
-
-                {% if movie.photo %}
-                <div><img src="{{ movie.photo.url }}" class="img-fluid rounded-start" alt="{{ movie.title }} poster"/>
-                </div>
-                {% endif %}
-            </div>
-            <div class="cell is-col-span-3">
-                <div class="block">
-                    <div class="media">
-                        <div class="media-content">
-                            <p class="title is-4">{{movie.title}}
-                        </div>
-                        <div class="media-right">
-                            <span class="tag is-warning is-large">{{movie.imdb_rating}}</span>
-                        </div>
-                    </div>
-                    </p>
-
-                    <div>Year: {{movie.year}}</div>
-                    <div>Country:
-                        {% for country in movie.country.all %}
-                        {{ country.name }}
-                        {% endfor %}
-                    </div>
-
-                    <div>Genre:
-                        {% for genre in movie.genre.all %}
-                        {{ genre.name }}
-                        {% endfor %}
-                    </div>
-
-                    <div>Director:
-                        {% for director in movie.director.all %}
-                        <a href="{% url 'movies:get_director' director.pk %}?movie={{ movie.pk }}">
-                            {{ director.first_name }} {{ director.last_name }}
-                        </a>
-                        {% endfor %}
-                    </div>
-
-                    <div class="block">
-                        Actors:
-                        {% for actor in movie.actors.all %}
-                        <a href="{% url 'movies:get_actor' actor.pk %}?movie={{ movie.pk }}">
-                            {{ actor.first_name }} {{ actor.last_name }}
-                        </a>
-                        {% endfor %}
-                    </div>
-                    <div class="block">
-                        {{ movie.description }}
-                    </div>
-                    <p class="card-text"><small class="text-body-secondary">Rating: {{ movie.rating }}</small></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <p class="title is-4"></p>
-    {% if user.is_authenticated %}
-    <form method="POST" action="{% url 'movies:create_comments' %}">
-        {% csrf_token %}
-        <div class="field">
-            <label class="label">Comments</label>
-            <div class="control">
-                <textarea id="comment_text" name="text" class="textarea" placeholder="Write your comments here"></textarea>
-            </div>
-            <input type="hidden" name="movie_id" value="{{movie.pk}}">
-        </div>
-
-        <div class="field is-grouped">
-            <div class="control">
-                <button type="submit" class="button is-link">Send</button>
-            </div>
-            <div class="control">
-                <a class="button is-link is-light" onclick="document.getElementById('comment_text').value=''">Cancel</a>
-            </div>
-        </div>
-    </form>
-    {% endif %}
-
-    {% for comment in comments %}
     <div class="box">
-        {{comment.text}}
+        <div class="fixed-grid has-4-cols">
+            <div class="grid">
+                <div class="cell">
+
+                    {% if movie.photo %}
+                    <div><img src="{{ movie.photo.url }}" class="img-fluid rounded-start"
+                              alt="{{ movie.title }} poster"/>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="cell is-col-span-3">
+                    <div class="block card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">{{movie.title}}
+                            </div>
+                            <div class="media-right">
+                                <span class="tag is-medium imdb-rating">IMDB: {{movie.imdb_rating}}</span>
+                            </div>
+                        </div>
+                        </p>
+
+                        <div>
+                            <span class="card-info-text">Year:</span> {{movie.year}}
+                        </div>
+                        <div>
+                            <span class="card-info-text">Country:</span>
+                            {% for country in movie.country.all %}
+                            {{ country.name }}
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <span class="card-info-text">Genre:</span>
+                            {% for genre in movie.genre.all %}
+                            {{ genre.name }}
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <span class="card-info-text">Director:</span>
+                            {% for director in movie.director.all %}
+                            <a class="custom-link" href="{% url 'movies:get_director' director.pk %}?movie={{ movie.pk }}">
+                                {{ director.first_name }} {{ director.last_name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+
+                        <div class="block">
+                            <span class="card-info-text">Actors:</span>
+                            {% for actor in movie.actors.all %}
+                            <a class="custom-link" href="{% url 'movies:get_actor' actor.pk %}?movie={{ movie.pk }}">
+                                {{ actor.first_name }} {{ actor.last_name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                        <div class="block">
+                            {{ movie.description }}
+                        </div>
+                        <div class="block">
+                            <div class="fixed-grid has-3-cols">
+                                <div class="grid">
+                                    <div class="cell">
+                                        <figure class="image is-4b5">
+                                            {% if movie.screenshot1 %}
+                                            <img src="{{ movie.screenshot1.url }}" alt="{{ movie.title }} screenshot1">
+                                            {% endif %}
+                                        </figure>
+                                    </div>
+                                    <div class="cell">
+                                        <figure class="image is-4b5">
+                                            {% if movie.screenshot2 %}
+                                            <img src="{{ movie.screenshot2.url }}" alt="{{ movie.title }} screenshot2">
+                                            {% endif %}
+                                        </figure>
+                                    </div>
+                                    <div class="cell">
+                                        <figure class="image is-4b5">
+                                            {% if movie.screenshot3 %}
+                                            <img src="{{ movie.screenshot3.url }}" alt="{{ movie.title }} screenshot3">
+                                            {% endif %}
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endfor %}
+</div>
+
+<div class="block"></div>
+
+<div class="container">
+    <div class="box">
+        <p class="title is-4"></p>
+        {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'movies:create_comments' %}">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label">Comments</label>
+                <div class="control">
+                <textarea id="comment_text" name="text" class="textarea"
+                          placeholder="Write your comments here"></textarea>
+                </div>
+                <input type="hidden" name="movie_id" value="{{movie.pk}}">
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="submit" class="button is-link">Send</button>
+                </div>
+                <div class="control">
+                    <a class="button is-link is-light"
+                       onclick="document.getElementById('comment_text').value=''">Cancel</a>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+
+        <div class="block"></div>
+
+        {% for comment in comments %}
+        <div class="notification">
+            <p class="title is-6 has-text-link">{{comment.user.username}}</p>
+
+            <div class="control">
+              {{comment.text}}
+            </div>
+            <div>
+                <strong class="content is-small">{{comment.created_at}}</strong>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
