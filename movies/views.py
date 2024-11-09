@@ -1,6 +1,10 @@
+import json
+
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
-from movies.models import Movie, Actor, Director, Country, Genre, Category
+from django.shortcuts import get_object_or_404, render, redirect
+
+from movies.models import Movie, Actor, Director, Country, Genre, Category, Comments
 
 
 def movie_list(request: HttpRequest) -> HttpResponse:
@@ -62,8 +66,9 @@ def movie_list(request: HttpRequest) -> HttpResponse:
 
 def get_movie(request: HttpRequest, pk: int) -> HttpResponse:
     movie = Movie.objects.get(pk=pk)
+    comments = Comments.objects.filter(movie=movie.pk)
 
-    return render(request, "movies/movie.html", {"movie": movie})
+    return render(request, "movies/movie.html", {"movie": movie, "comments": comments})
 
 
 def get_actor(request: HttpRequest, pk: int) -> HttpResponse:
@@ -80,3 +85,13 @@ def get_director(request: HttpRequest, pk: int) -> HttpResponse:
     movie = Movie.objects.get(pk=movie_id)
 
     return render(request, "movies/director.html", {"director": director, "movie": movie})
+
+@login_required
+def create_comments(request: HttpRequest) -> HttpResponse:
+    if request.method == "POST":
+        movie_id = request.POST["movie_id"]
+        text = request.POST["text"]
+        movie = Movie.objects.get(pk=movie_id)
+        Comments(text=text, movie=movie, user=request.user).save()
+        return redirect('movies:get_movie', pk=movie_id)
+    return HttpResponse()
