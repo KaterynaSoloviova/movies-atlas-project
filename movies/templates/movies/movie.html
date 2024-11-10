@@ -36,7 +36,7 @@
                     <div class="block card-content">
                         <div class="media">
                             <div class="media-content">
-                                <p class="title is-4">{{movie.title}}
+                                <p class="title is-4 custom-title">{{movie.title}}
                             </div>
                             <div class="media-right">
                                 <span class="tag is-medium imdb-rating">IMDB: {{movie.imdb_rating}}</span>
@@ -57,7 +57,7 @@
                         <div>
                             <span class="card-info-text">Genre:</span>
                             {% for genre in movie.genre.all %}
-                            {{ genre.name }}
+                            {{ genre.name }}&nbsp;&nbsp;
                             {% endfor %}
                         </div>
 
@@ -75,7 +75,7 @@
                             {% for actor in movie.actors.all %}
                             <a class="custom-link" href="{% url 'movies:get_actor' actor.pk %}?movie={{ movie.pk }}">
                                 {{ actor.first_name }} {{ actor.last_name }}
-                            </a>
+                            </a>&nbsp;&nbsp;
                             {% endfor %}
                         </div>
                         <div class="block">
@@ -134,10 +134,10 @@
 
             <div class="field is-grouped">
                 <div class="control">
-                    <button type="submit" class="button is-link">Send</button>
+                    <button type="submit" class="button is-info is-dark">Send</button>
                 </div>
                 <div class="control">
-                    <a class="button is-link is-light"
+                    <a class="button is-info is-inverted"
                        onclick="document.getElementById('comment_text').value=''">Cancel</a>
                 </div>
             </div>
@@ -148,7 +148,7 @@
 
         {% for comment in comments %}
         <div class="notification">
-            <p class="title is-6 has-text-link">{{comment.user.username}}</p>
+            <p class="title is-6 ">{{comment.user.username}}</p>
 
             <div class="control">
               {{comment.text}}
