@@ -7,3 +7,6 @@ This project was built using Django as the backend framework, Bulma CSS for styl
 The project consists of two main areas: Account Domain and Movies Domain.
 •	Account Domain: handles user actions like login, logout, and registration.
 •	Movies Domain is the core, where we manage all things movie-related.
+
+## Presentation link
+[https://www.youtube.com](https://www.youtube.com/watch?v=P1VxwgEbdBw)
